@@ -1,16 +1,13 @@
 var paused;
 var pauseTime;
 var startTime;
-var elapsedTime;
 var subscription;
-var pauseTime;
 var elapsedPauseTime;
-var netElapsedTime;
 var play = false;
 
-
-function createTimer(time) {
-  elapsedTime = 0;
+function createTimer() {
+  var time = getTimeFromInputs();
+  var netElapsedTime = 0;
   elapsedPauseTime = 0;
   paused = false;
   play = true;
@@ -54,3 +51,6 @@ function stop() {
   paused = false;
   hideShowByState();
 }
+
+// Start render cyle
+hideShowByState();
