@@ -1,3 +1,5 @@
+var audioIsPlaying = false;
+
 function render(time) {
   var readableTime = parseMillisecondsIntoReadableTime(time);
   document.getElementById('timer').textContent = readableTime;
@@ -7,7 +9,7 @@ function render(time) {
 function parseMillisecondsIntoReadableTime(milliseconds) {
   var sign = '';
   if (milliseconds < 0) {
-    sign = '-';
+    sign = '- ';
     milliseconds = -milliseconds;
   }
 
@@ -68,4 +70,24 @@ function getTimeFromInputs() {
   const second = +document.getElementById('second-input').value;
 
   return (((((hour * 60) + minute) * 60) + second) * 1000);
+}
+
+var audio = new Audio('bell-ringing-04.mp3');
+
+function playAudio() {
+  audio.loop = true;
+  audioIsPlaying = true;
+  audio.play();
+}
+
+function stopAudio() {
+  audioIsPlaying = false;
+  audio.pause();
+  audio.currentTime = 0;
+}
+
+function enterOvertime() {
+  inOvertime = true;
+  playAudio();
+  document.getElementById('timer').style.color = 'red';
 }

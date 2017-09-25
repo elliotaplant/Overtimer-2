@@ -1,3 +1,12 @@
+.timer-input-spacer {
+  font-size: 5em;
+}
+
 .time-input {
-  width: 3em;
+  font-size: 5em;
+  width: 1.5em;
+}
+
+#timer {
+  font: 10em system-ui;
 }

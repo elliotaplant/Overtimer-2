@@ -3,6 +3,7 @@ var pauseTime;
 var startTime;
 var subscription;
 var elapsedPauseTime;
+var inOvertime = false;
 var play = false;
 
 function createTimer() {
@@ -12,7 +13,8 @@ function createTimer() {
   paused = false;
   play = true;
   startTime = Date.now();
-  // console.log(document.getElementById('myTime').value);
+  inOvertime = false;
+
   hideShowByState();
 
   subscription = Rx.Observable.interval(100)
@@ -22,7 +24,11 @@ function createTimer() {
       if (!paused) {
         netElapsedTime = update.timestamp - startTime - elapsedPauseTime;
       }
-      render(time - netElapsedTime);
+      var timeLeft = time - netElapsedTime
+      if (timeLeft < 0 && !inOvertime) {
+        enterOvertime();
+      }
+      render(timeLeft);
     });
 }
 
@@ -49,6 +55,7 @@ function stop() {
   subscription && subscription.unsubscribe();
   play = false;
   paused = false;
+  stopAudio();
   hideShowByState();
 }
 
